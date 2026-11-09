@@ -1,0 +1,413 @@
+\PassOptionsToPackage{table}{xcolor}
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=11mm,top=10mm,bottom=16mm,footskip=7mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang TC}[BoldFont={PingFang TC Semibold}]
+\setCJKsansfont{PingFang TC}[BoldFont={PingFang TC Semibold}]
+\setmainfont{Helvetica Neue}[BoldFont={Helvetica Neue Bold}]
+\usepackage{tabularx,booktabs,array,colortbl}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{enumitem}
+\usepackage{needspace}
+
+\definecolor{ink}{HTML}{1F3A5F}
+\definecolor{soft}{HTML}{E8EEF6}
+\definecolor{warn}{HTML}{B54708}
+\definecolor{warnbg}{HTML}{FFF4E5}
+\definecolor{rowgray}{HTML}{F4F6F8}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\newlength{\colw}\setlength{\colw}{\dimexpr(\textwidth-6mm)/2\relax}
+\renewcommand{\arraystretch}{1.22}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
+\setlength{\abovedisplayshortskip}{2pt}
+\setlength{\belowdisplayshortskip}{2pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\footnotesize\color{gray}\thepage\,/\,\pageref{LastPage}}
+
+% units
+\newcommand{\U}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\cm}{\mathrm{cm}}
+
+% section header
+\newcommand{\sect}[2]{%
+  \par\needspace{10\baselineskip}\vspace{4pt}%
+  \begin{tcolorbox}[enhanced,colback=ink,colframe=ink,arc=1.5pt,
+    left=4pt,right=4pt,top=2pt,bottom=2pt,boxsep=0pt,before skip=2pt,after skip=4pt]
+  \color{white}\bfseries\large \makebox[1.4em][l]{#1}#2
+  \end{tcolorbox}}
+
+% sub heading
+\newcommand{\sub}[1]{\par\needspace{4\baselineskip}\vspace{3pt}{\bfseries\color{ink}$\blacktriangleright$\ #1}\par\nopagebreak}
+
+% key formula box
+\newtcolorbox{key}{colback=soft,colframe=ink!60,boxrule=0.5pt,arc=1.5pt,
+  left=3pt,right=3pt,top=3pt,bottom=3pt,before skip=2pt,after skip=3pt,halign=center,
+  before upper={\thinmuskip=3mu\medmuskip=4mu\thickmuskip=5mu}}
+
+% warning / note box
+\newtcolorbox{note}[1][注意]{enhanced,colback=warnbg,colframe=warn,boxrule=0pt,
+  leftrule=2.5pt,arc=0pt,left=4pt,right=3pt,top=2pt,bottom=2pt,
+  before skip=3pt,after skip=3pt,fontupper=\small,
+  before upper={\textcolor{warn}{\textbf{#1}}\ }}
+
+% unit table
+\newenvironment{units}{%
+  \small\rowcolors{2}{white}{rowgray}%
+  \tabularx{\linewidth}{@{\,}>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.43\linewidth}@{\,}}
+  \toprule \rowcolor{white}\textbf{物理量（符號）} & \textbf{SI 單位}\\ \midrule}%
+  {\bottomrule\endtabularx\par\vspace{2pt}}
+
+% black-and-white variant: compile cheatsheet-bw.tex (defines \BW, then inputs this file)
+\ifdefined\BW
+  \definecolor{ink}{gray}{0}
+  \definecolor{soft}{gray}{1}
+  \definecolor{warn}{gray}{0}
+  \definecolor{warnbg}{gray}{1}
+  \definecolor{rowgray}{gray}{1}
+  \fancyfoot[C]{\footnotesize\thepage\,/\,\pageref{LastPage}}
+  \renewcommand{\sect}[2]{%
+    \par\needspace{10\baselineskip}\vspace{4pt}%
+    \begin{tcolorbox}[enhanced,colback=white,frame hidden,sharp corners,
+      left=0pt,right=0pt,top=0pt,bottom=0pt,boxsep=0pt,before skip=2pt,after skip=4pt]
+    \bfseries\large\setlength{\fboxsep}{2.5pt}\colorbox{black}{\makebox[0.9em]{\color{white}#1}}\hspace{0.5em}#2
+    \end{tcolorbox}}
+  \renewenvironment{key}{\begin{tcolorbox}[colback=white,colframe=black,boxrule=0.6pt,arc=1.5pt,
+    left=3pt,right=3pt,top=3pt,bottom=3pt,before skip=2pt,after skip=3pt,halign=center,
+    before upper={\thinmuskip=3mu\medmuskip=4mu\thickmuskip=5mu}]}{\end{tcolorbox}}
+  \renewenvironment{note}[1][注意]{\begin{tcolorbox}[enhanced,colback=white,colframe=black,
+    boxrule=0pt,leftrule=2pt,arc=0pt,left=4pt,right=3pt,top=1pt,bottom=1pt,
+    before skip=3pt,after skip=3pt,fontupper=\small,
+    before upper={\textbf{#1}\ }]}{\end{tcolorbox}}
+\fi
+
+\hfuzz=0pt
+\begin{document}
+
+% ================= Section 10 first: exam checklist (navigation) =================
+\sect{0}{題型判斷（Exam Checklist）}
+{\small\rowcolors{2}{white}{rowgray}
+\begin{tabularx}{\linewidth}{@{\,}>{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.28\linewidth} >{\raggedright\arraybackslash}p{0.28\linewidth} c@{\,}}
+\toprule\rowcolor{white}
+\textbf{題目特徵} & \textbf{優先使用} & \textbf{關鍵條件} & \textbf{見}\\\midrule
+互相推動、拋出物體、爆炸 & 動量守恆 & 外力總衝量可忽略 & §3\\
+系統內物體移動，求質心 & 質心公式、質心運動 & 統一座標原點；注意外力 & §2\\
+一維或二維碰撞 & 各方向動量守恆 & 外力總衝量可忽略 & §3\\
+彈性碰撞 & 動量＋動能守恆 & 碰撞為彈性 & §3\\
+完全非彈性碰撞 & 動量守恆、共同末速度 & 碰後速度相同 & §3\\
+無阻力上升、下降或彈簧運動 & 機械能守恆 & 無非保守力做功 & §6 §8\\
+碰撞後上升（彈道單擺） & 先動量，後機械能 & 分開分析碰撞與擺動 & §3\\
+轉動系統質量分布改變 & 角動量守恆 & 對選定軸的外力矩總衝量為零 & §5\\
+求力／加速度 & $\sum F=ma$、$\sum\tau=I\alpha$ & — & §1 §5\\
+求速度／高度／壓縮量 & $W_\mathrm{net}=\Delta K$ 或能量守恆 & — & §8\\
+求碰撞後轉速 & 角動量守恆 & 先檢查守恆條件 & §5\\
+圓周運動 & $v=r\omega$、$a_c=v^2/r$ & — & §4\\
+\bottomrule
+\end{tabularx}}
+\begin{note}[共同判斷原則：]
+動量守恆看「外力總衝量」；角動量守恆看「外力矩的總衝量」；機械能守恆看「是否有非保守力做功」。三種守恆不能任意互換。\textbf{先界定系統}，再決定「哪段時間、哪個方向、哪種物理量」守恆。
+\end{note}
+
+\noindent\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §1 ----
+\sect{1}{直線運動（Linear Motion）}
+\begin{units}
+質量 Mass（$m$） & \U{kg}\\
+位移 Displacement（$\Delta x$） & \U{m}\\
+時間 Time（$t$） & \U{s}\\
+速度 Velocity（$v$） & \U{m/s}\\
+加速度 Acceleration（$a$） & \U{m/s^2}\\
+力 Force（$F$） & \U{N=kg\cdot m/s^2}\\
+動量 Momentum（$p$） & \U{kg\cdot m/s=N\cdot s}\\
+動能 Kinetic Energy（$K$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+\end{units}
+
+\sub{動力學、動量與動能}
+\begin{key}$\displaystyle p=mv,\qquad \sum F=ma,\qquad K=\tfrac12 mv^2$\end{key}
+
+\sub{等加速度運動（$a$ 為常數）}
+\begin{key}
+$\displaystyle\begin{gathered}v=v_0+at,\qquad \Delta x=v_0t+\tfrac12at^2\\ v^2=v_0^2+2a\Delta x\end{gathered}$
+\end{key}
+
+\sub{衝量（Impulse）}
+{\raggedright 定力或平均合力時（單位 \U{N\cdot s=kg\cdot m/s}）：\par}
+\begin{key}$\displaystyle \Delta p=F_{\mathrm{net,avg}}\,\Delta t$\end{key}
+\end{minipage}\hfill
+\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §2 ----
+\sect{2}{質心（Center of Mass）}
+\begin{units}
+質心位置（$x_\cm,\ y_\cm$） & \U{m}\\
+質心速度（$\vec v_\cm$） & \U{m/s}\\
+質心加速度（$\vec a_\cm$） & \U{m/s^2}\\
+系統總質量（$M=\sum_i m_i$） & \U{kg}\\
+系統總動量（$\vec P$） & \U{kg\cdot m/s=N\cdot s}\\
+\end{units}
+
+\sub{離散質點的質心（各座標分別計算）}
+\begin{key}$\displaystyle x_\cm=\frac{\sum_i m_i x_i}{\sum_i m_i},\qquad y_\cm=\frac{\sum_i m_i y_i}{\sum_i m_i}$\end{key}
+
+\sub{質心運動與系統總動量}
+\begin{key}$\displaystyle \vec P=\sum_i m_i\vec v_i=M\vec v_\cm,\qquad \sum\vec F_{\mathrm{ext}}=M\vec a_\cm$\end{key}
+
+\sub{常見均勻物體的質心}
+{\small\rowcolors{2}{white}{rowgray}
+\begin{tabularx}{\linewidth}{@{\,}l X@{\,}}
+\toprule\rowcolor{white}\textbf{形狀} & \textbf{質心位置}\\\midrule
+細棒 & 中點\\
+矩形薄板 & 對角線交點\\
+圓盤、圓環、球體 & 幾何中心\\
+三角形薄板 & 三條中線交點；距底邊 $h/3$\\
+半圓形薄板 & 對稱軸上，距直徑 $4R/(3\pi)$\\
+\bottomrule
+\end{tabularx}}
+\begin{note}
+各物體位置須相對\textbf{同一座標原點}，可為負數。只有內力時無法改變總動量；外力合力為零 $\to$ 質心等速運動；質心原本靜止才會維持原位置。
+\end{note}
+\end{minipage}
+
+\newpage
+\noindent\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §3 ----
+\sect{3}{動量守恆與碰撞（Momentum \& Collisions）}
+\begin{units}
+動量（$\vec p=m\vec v$） & \U{kg\cdot m/s=N\cdot s}\\
+總動量（$\vec P=\sum_i\vec p_i$） & \U{kg\cdot m/s=N\cdot s}\\
+衝量 Impulse（$\vec J$） & \U{N\cdot s=kg\cdot m/s}\\
+動能（$K$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+\end{units}
+
+\sub{衝量－動量定理}
+\begin{key}$\displaystyle \vec J_{\mathrm{net}}=\Delta\vec p=\vec p_f-\vec p_i=\vec F_{\mathrm{net,avg}}\,\Delta t$\end{key}
+
+\sub{系統動量守恆（外力總衝量為零）}
+\begin{key}$\displaystyle \vec P_i=\vec P_f,\qquad \sum_i m_i\vec v_{i,\mathrm{before}}=\sum_i m_i\vec v_{i,\mathrm{after}}$\end{key}
+
+\sub{二維碰撞：各方向獨立守恆}
+\begin{key}$\displaystyle\begin{gathered}P_{x,i}=P_{x,f},\qquad P_{y,i}=P_{y,f}\\ p_x=mv\cos\theta,\qquad p_y=mv\sin\theta\end{gathered}$\end{key}
+{\small 分量取決於座標軸與角度定義；向左、向下的分量可能為負。}
+
+\sub{碰撞類型對照}
+{\small\rowcolors{2}{white}{rowgray}
+\begin{tabularx}{\linewidth}{@{\,}X l >{\raggedright\arraybackslash}p{0.33\linewidth}@{\,}}
+\toprule\rowcolor{white}\textbf{類型} & \textbf{總動量} & \textbf{總動能}\\\midrule
+彈性 Elastic & 守恆 & 守恆\\
+非彈性 Inelastic & 守恆 & 減少\\
+完全非彈性 Perfectly Inelastic & 守恆 & 減少；碰後速度相同\\
+\bottomrule
+\end{tabularx}}
+{\footnotesize 動量守恆假設碰撞期間外力總衝量為零（或可忽略）；動能欄以無額外能量釋放的碰撞為前提。}
+
+\sub{完全非彈性碰撞（一維，兩物體黏在一起）}
+\begin{key}$\displaystyle\begin{gathered}m_1v_{1i}+m_2v_{2i}=(m_1+m_2)v_f\\ \Rightarrow\ v_f=\frac{m_1v_{1i}+m_2v_{2i}}{m_1+m_2}\end{gathered}$\end{key}
+
+\sub{彈性碰撞：動量、動能同時守恆（一維）}
+\begin{key}
+$\displaystyle\begin{gathered}
+m_1v_{1i}+m_2v_{2i}=m_1v_{1f}+m_2v_{2f}\\
+\tfrac12m_1v_{1i}^2+\tfrac12m_2v_{2i}^2=\tfrac12m_1v_{1f}^2+\tfrac12m_2v_{2f}^2
+\end{gathered}$
+\end{key}
+\begin{note}[二維特殊規則：]
+兩球等質量、一球原先靜止、彈性碰撞，且碰後兩球都在運動 $\to$ 兩末速度向量\textbf{互相垂直}。
+\end{note}
+
+\sub{動量與動能不同}
+\begin{key}$\displaystyle K=\frac{p^2}{2m}$\end{key}
+{\small 動量是向量（方向重要），動能是純量。非彈性碰撞時部分動能轉為熱、聲音與形變，但總動量並未消失。}
+
+\sub{分階段：彈道單擺（Ballistic Pendulum）}
+{\small \textbf{(1) 碰撞}（子彈嵌入擺錘，時間短）：水平動量守恆，機械能一般\textbf{不}守恆。}
+\begin{key}$\displaystyle mv=(m+M)V$\end{key}
+{\small \textbf{(2) 擺動}（合體上擺，忽略阻力）：機械能守恆，但受外力，動量一般\textbf{不}守恆。}
+\begin{key}$\displaystyle \tfrac12(m+M)V^2=(m+M)gh$\end{key}
+\begin{note}[解題關鍵：]
+碰撞本身不會破壞動量守恆；是否守恆取決於外力衝量。
+\end{note}
+\end{minipage}\hfill
+\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §4 ----
+\sect{4}{圓周運動（Circular Motion）}
+\begin{units}
+半徑 Radius（$r$） & \U{m}\\
+弧長 Arc Length（$s$） & \U{m}\\
+角位移（$\theta$） & \U{rad}（無因次）\\
+角速度（$\omega$） & \U{rad/s}（量綱 \U{s^{-1}}）\\
+角加速度（$\alpha$） & \U{rad/s^2}（量綱 \U{s^{-2}}）\\
+切線速度（$v_t$） & \U{m/s}\\
+切線加速度（$a_t$） & \U{m/s^2}\\
+向心加速度（$a_c$） & \U{m/s^2}\\
+向心合力（$F_c$） & \U{N=kg\cdot m/s^2}\\
+週期 Period（$T$） & \U{s}\\
+頻率 Frequency（$f$） & \U{Hz=s^{-1}}\\
+\end{units}
+
+\sub{線量與角量換算}
+\begin{key}$\displaystyle s=r\theta,\qquad v_t=r\omega,\qquad a_t=r\alpha$\end{key}
+\sub{向心加速度／向心合力}
+\begin{key}$\displaystyle a_c=\frac{v_t^2}{r}=r\omega^2,\qquad F_c=ma_c=\frac{mv_t^2}{r}=mr\omega^2$\end{key}
+\sub{等速圓周運動}
+\begin{key}$\displaystyle \omega=\frac{2\pi}{T}=2\pi f$\end{key}
+\begin{note}[判讀：]
+向心力不是新施加的力，而是「徑向指向圓心的\textbf{合力}」。等速圓周運動中向心力與位移垂直，\textbf{不做功}。
+\end{note}
+\end{minipage}
+
+\newpage
+\noindent\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §5 ----
+\sect{5}{轉動運動（固定軸剛體）}
+\begin{units}
+角位移（$\Delta\theta$） & \U{rad}（無因次）\\
+角速度（$\omega$） & \U{rad/s}\\
+角加速度（$\alpha$） & \U{rad/s^2}\\
+轉動慣量（$I$） & \U{kg\cdot m^2}\\
+力矩 Torque（$\tau$） & \U{N\cdot m=kg\cdot m^2/s^2}\\
+角動量（$L$） & \U{kg\cdot m^2/s=N\cdot m\cdot s}\\
+轉動動能（$K_\mathrm{rot}$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+\end{units}
+
+\sub{力矩與轉動牛頓第二定律（固定 $I$）}
+\begin{key}$\displaystyle \tau=rF\sin\phi=F\ell,\qquad \sum\tau=I\alpha$\end{key}
+{\small $\ell$：力臂（軸到力作用線的垂直距離）；$\phi$：半徑向量與施力方向的夾角。}
+
+\sub{轉動慣量、角動量}
+\begin{key}$\displaystyle\begin{gathered}I=\sum_i m_i r_i^2\\ L=I\omega\ (\text{固定軸}),\qquad L=rmv\sin\phi\ (\text{單一質點})\end{gathered}$\end{key}
+
+\sub{角動量守恆（對該軸外力矩合計為零）}
+\begin{key}$\displaystyle L_i=L_f,\qquad I_i\omega_i=I_f\omega_f$\end{key}
+
+\sub{等角加速度運動（$\alpha$ 為常數）}
+\begin{key}$\displaystyle \omega=\omega_0+\alpha t,\quad \Delta\theta=\omega_0t+\tfrac12\alpha t^2,\quad \omega^2=\omega_0^2+2\alpha\Delta\theta$\end{key}
+
+\sub{轉動動能、功與功率}
+\begin{key}$\displaystyle\begin{gathered}K_\mathrm{rot}=\tfrac12I\omega^2,\qquad P=\tau\omega\\ W_\mathrm{rot}=\tau\,\Delta\theta\ \ (\text{定力矩})\end{gathered}$\end{key}
+
+\sub{常見轉動慣量（$M$ 總質量、$R$ 半徑；單位 \U{kg\cdot m^2}）}
+{\small\rowcolors{2}{white}{rowgray}
+\begin{tabularx}{\linewidth}{@{\,}X >{$\displaystyle}l<{$}@{\,}}
+\toprule\rowcolor{white}\textbf{物體／旋轉軸} & \textbf{$I$}\\\midrule
+質點／距軸 $r$ & mr^2\\
+薄圓環／中心垂直平面軸 & MR^2\\
+實心圓盤或圓柱／中心對稱軸 & \tfrac12MR^2\\
+實心球／球心軸 & \tfrac25MR^2\\
+空心薄球殼／球心軸 & \tfrac23MR^2\\
+細棒／中心、垂直棒 & \tfrac1{12}M\ell^2\\
+細棒／端點、垂直棒 & \tfrac13M\ell^2\\
+\bottomrule
+\end{tabularx}}
+\sub{平行軸定理（Parallel-Axis Theorem）}
+\begin{key}$\displaystyle I=I_\cm+Md^2$\end{key}
+\begin{note}
+力矩 \U{N\cdot m} 與能量 \U{J} 量綱相同但意義不同；力矩寫 \U{N\cdot m}，\textbf{不要寫 J}。
+\end{note}
+\end{minipage}\hfill
+\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §6 ----
+\sect{6}{彈簧系統（Spring System）}
+\begin{units}
+彈簧常數（$k$） & \U{N/m=kg/s^2}\\
+伸長／壓縮位移（$x$） & \U{m}\\
+彈力（$F_s$） & \U{N=kg\cdot m/s^2}\\
+彈性位能（$U_s$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+彈簧做功（$W_s$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+\end{units}
+
+\sub{虎克定律、彈性位能、彈力做功（初態$\to$末態）}
+\begin{key}$\displaystyle\begin{gathered}F_s=-kx,\qquad U_s=\tfrac12kx^2\\ W_s=-\Delta U_s=\tfrac12k(x_i^2-x_f^2)\end{gathered}$\end{key}
+
+\sub{理想水平無摩擦彈簧＋物塊：機械能守恆}
+\begin{key}$\displaystyle \tfrac12mv_i^2+\tfrac12kx_i^2=\tfrac12mv_f^2+\tfrac12kx_f^2$\end{key}
+
+\sub{從壓縮量 $x$ 靜止釋放，通過自然長度}
+\begin{key}$\displaystyle \tfrac12kx^2=\tfrac12mv^2$\end{key}
+\begin{note}
+$x=0$ 為自然長度；$F_s$ 的負號表示回復力與位移反向。彈性位能不論拉長或壓縮皆為正。
+\end{note}
+
+% ---- §7 ----
+\sect{7}{滾動運動（平移＋旋轉）}
+\begin{units}
+質心速度（$v_\cm$） & \U{m/s}\\
+質心加速度（$a_\cm$） & \U{m/s^2}\\
+角速度（$\omega$） & \U{rad/s}\\
+半徑（$R$） & \U{m}\\
+質心轉動慣量（$I_\cm$） & \U{kg\cdot m^2}\\
+總動能（$K$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+\end{units}
+
+\sub{純滾動（無滑動）}
+\begin{key}$\displaystyle v_\cm=R\omega,\qquad a_\cm=R\alpha$\end{key}
+\sub{總動能＝平移動能＋繞質心轉動動能}
+\begin{key}$\displaystyle K=\tfrac12Mv_\cm^2+\tfrac12I_\cm\omega^2$\end{key}
+\sub{斜坡由靜止純滾下，無能量損失}
+\begin{key}$\displaystyle\begin{gathered}Mgh=\tfrac12Mv^2+\tfrac12I_\cm\omega^2\\ \Rightarrow\ v=\sqrt{\frac{2gh}{1+I_\cm/(MR^2)}}\end{gathered}$\end{key}
+{\small $h$ 是\textbf{質心}下降高度；$g$ 單位 \U{m/s^2}。}
+\end{minipage}
+
+\newpage
+\noindent\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §8 ----
+\sect{8}{功、能量與功率（所有系統共用）}
+\begin{units}
+功 Work（$W$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+動能（$K$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+位能（$U$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+機械能（$E$） & \U{J=N\cdot m=kg\cdot m^2/s^2}\\
+功率 Power（$P$） & \U{W=J/s=kg\cdot m^2/s^3}\\
+重力加速度（$g$） & \U{m/s^2}\\
+\end{units}
+
+\sub{定力做功（$\phi$ 為力與位移夾角）}
+\begin{key}$\displaystyle W=Fd\cos\phi$\end{key}
+\sub{功能定理——所有力做的總功}
+\begin{key}$\displaystyle W_\mathrm{net}=\Delta K=K_f-K_i$\end{key}
+\sub{重力位能（近地表）與重力做功}
+\begin{key}$\displaystyle U_g=mgh,\qquad W_g=-\Delta U_g=mg(h_i-h_f)$\end{key}
+\sub{機械能}
+\begin{key}$\displaystyle E=K+U,\qquad U=U_g+U_s+\cdots$\end{key}
+\sub{只有保守力做功 $\to$ 機械能守恆；有非保守力（摩擦）}
+\begin{key}$\displaystyle K_i+U_i=K_f+U_f,\qquad K_i+U_i+W_\mathrm{nc}=K_f+U_f$\end{key}
+\sub{功率}
+\begin{key}$\displaystyle\begin{gathered}P_\mathrm{avg}=\frac{W}{\Delta t},\qquad P_\mathrm{instant}=\vec F\cdot\vec v\\ P=\tau\omega\ \ (\text{固定軸轉動})\end{gathered}$\end{key}
+\begin{note}[正負號：]
+力與位移同向做正功、反向做負功、垂直做零功。保守力做功 $W_\mathrm{cons}=-\Delta U$。正體 \U{W}（瓦特）是功率單位，斜體 $W$ 是「功」，不要混淆。
+\end{note}
+\end{minipage}\hfill
+\begin{minipage}[t]{\colw}\setlength{\parskip}{2pt}
+% ---- §9 ----
+\sect{9}{導出單位完整展開（SI Unit Expansion）}
+{\small\rowcolors{2}{white}{rowgray}
+\begin{tabularx}{\linewidth}{@{\,}X >{\raggedright\arraybackslash}p{0.5\linewidth}@{\,}}
+\toprule\rowcolor{white}\textbf{物理量／單位} & \textbf{慣用形式 $\to$ SI 基本單位}\\\midrule
+力／牛頓 N & $1\,\U{N}=1\,\U{kg\cdot m/s^2}$\\
+功、能量／焦耳 J & $1\,\U{J}=1\,\U{N\cdot m}=1\,\U{kg\cdot m^2/s^2}$\\
+功率／瓦特 W & $1\,\U{W}=1\,\U{J/s}=1\,\U{kg\cdot m^2/s^3}$\\
+頻率／赫茲 Hz & $1\,\U{Hz}=1\,\U{s^{-1}}$\\
+動量、衝量 & \U{N\cdot s=kg\cdot m/s}\\
+力矩 & \U{N\cdot m=kg\cdot m^2/s^2}\\
+轉動慣量 & \U{kg\cdot m^2}\\
+角動量 & \U{N\cdot m\cdot s=kg\cdot m^2/s}\\
+彈簧常數 & \U{N/m=kg/s^2}\\
+角速度 & \U{rad/s}（量綱 \U{s^{-1}}）\\
+角加速度 & \U{rad/s^2}（量綱 \U{s^{-2}}）\\
+\bottomrule
+\end{tabularx}}
+\sub{角度換算}
+\begin{key}$\displaystyle 1\,\U{rev}=2\pi\,\U{rad},\qquad 1\,\U{rpm}=\frac{2\pi}{60}\,\U{rad/s}$\end{key}
+\begin{note}[適用條件：]
+$\sum\tau=I\alpha$ 用於固定軸、固定轉動慣量；$L=I\omega$ 指固定軸的角動量分量；$W=\tau\Delta\theta$ 要求力矩恆定。摩擦不一定使系統總動量不守恆——先界定系統，檢查外力衝量、外力矩衝量與非保守力做功。
+\end{note}
+\end{minipage}
+
+\end{document}
